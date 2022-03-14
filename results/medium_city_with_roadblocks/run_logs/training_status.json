@@ -1,0 +1,65 @@
+{
+    "MoveToGoal": {
+        "checkpoints": [
+            {
+                "steps": 1999917,
+                "file_path": "results\\medium_city_with_roadblocks\\MoveToGoal\\MoveToGoal-1999917.onnx",
+                "reward": 1.4829523783354532,
+                "creation_time": 1647118834.1875613,
+                "auxillary_file_paths": [
+                    "results\\medium_city_with_roadblocks\\MoveToGoal\\MoveToGoal-1999917.pt"
+                ]
+            },
+            {
+                "steps": 2499974,
+                "file_path": "results\\medium_city_with_roadblocks\\MoveToGoal\\MoveToGoal-2499974.onnx",
+                "reward": null,
+                "creation_time": 1647119754.1473906,
+                "auxillary_file_paths": [
+                    "results\\medium_city_with_roadblocks\\MoveToGoal\\MoveToGoal-2499974.pt"
+                ]
+            },
+            {
+                "steps": 2999980,
+                "file_path": "results\\medium_city_with_roadblocks\\MoveToGoal\\MoveToGoal-2999980.onnx",
+                "reward": 1.667051844022892,
+                "creation_time": 1647120718.7104964,
+                "auxillary_file_paths": [
+                    "results\\medium_city_with_roadblocks\\MoveToGoal\\MoveToGoal-2999980.pt"
+                ]
+            },
+            {
+                "steps": 3499947,
+                "file_path": "results\\medium_city_with_roadblocks\\MoveToGoal\\MoveToGoal-3499947.onnx",
+                "reward": 1.965000033378601,
+                "creation_time": 1647121670.537037,
+                "auxillary_file_paths": [
+                    "results\\medium_city_with_roadblocks\\MoveToGoal\\MoveToGoal-3499947.pt"
+                ]
+            },
+            {
+                "steps": 3653916,
+                "file_path": "results\\medium_city_with_roadblocks\\MoveToGoal\\MoveToGoal-3653916.onnx",
+                "reward": 1.9620000123977661,
+                "creation_time": 1647122006.0477355,
+                "auxillary_file_paths": [
+                    "results\\medium_city_with_roadblocks\\MoveToGoal\\MoveToGoal-3653916.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 3653916,
+            "file_path": "results\\medium_city_with_roadblocks\\MoveToGoal.onnx",
+            "reward": 1.9620000123977661,
+            "creation_time": 1647122006.0477355,
+            "auxillary_file_paths": [
+                "results\\medium_city_with_roadblocks\\MoveToGoal\\MoveToGoal-3653916.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.28.0",
+        "torch_version": "1.7.1+cu110"
+    }
+}

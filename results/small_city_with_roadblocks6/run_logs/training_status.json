@@ -1,0 +1,56 @@
+{
+    "MoveToGoal": {
+        "checkpoints": [
+            {
+                "steps": 499936,
+                "file_path": "results\\small_city_with_roadblocks6\\MoveToGoal\\MoveToGoal-499936.onnx",
+                "reward": 1.5735666741927465,
+                "creation_time": 1646941300.532805,
+                "auxillary_file_paths": [
+                    "results\\small_city_with_roadblocks6\\MoveToGoal\\MoveToGoal-499936.pt"
+                ]
+            },
+            {
+                "steps": 999986,
+                "file_path": "results\\small_city_with_roadblocks6\\MoveToGoal\\MoveToGoal-999986.onnx",
+                "reward": 1.7966875000856817,
+                "creation_time": 1646942197.510207,
+                "auxillary_file_paths": [
+                    "results\\small_city_with_roadblocks6\\MoveToGoal\\MoveToGoal-999986.pt"
+                ]
+            },
+            {
+                "steps": 1499996,
+                "file_path": "results\\small_city_with_roadblocks6\\MoveToGoal\\MoveToGoal-1499996.onnx",
+                "reward": 1.7219529474482818,
+                "creation_time": 1646943103.0115776,
+                "auxillary_file_paths": [
+                    "results\\small_city_with_roadblocks6\\MoveToGoal\\MoveToGoal-1499996.pt"
+                ]
+            },
+            {
+                "steps": 1519727,
+                "file_path": "results\\small_city_with_roadblocks6\\MoveToGoal\\MoveToGoal-1519727.onnx",
+                "reward": 1.7788709700107574,
+                "creation_time": 1646943145.023826,
+                "auxillary_file_paths": [
+                    "results\\small_city_with_roadblocks6\\MoveToGoal\\MoveToGoal-1519727.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 1519727,
+            "file_path": "results\\small_city_with_roadblocks6\\MoveToGoal.onnx",
+            "reward": 1.7788709700107574,
+            "creation_time": 1646943145.023826,
+            "auxillary_file_paths": [
+                "results\\small_city_with_roadblocks6\\MoveToGoal\\MoveToGoal-1519727.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.28.0",
+        "torch_version": "1.7.1+cu110"
+    }
+}

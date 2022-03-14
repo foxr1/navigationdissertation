@@ -1,0 +1,65 @@
+{
+    "MoveToGoal": {
+        "checkpoints": [
+            {
+                "steps": 5499970,
+                "file_path": "results\\small_city_only_rnd_goal_pos_new_agent2_new_config3\\MoveToGoal\\MoveToGoal-5499970.onnx",
+                "reward": 1.767105265667564,
+                "creation_time": 1646684682.2694826,
+                "auxillary_file_paths": [
+                    "results\\small_city_only_rnd_goal_pos_new_agent2_new_config3\\MoveToGoal\\MoveToGoal-5499970.pt"
+                ]
+            },
+            {
+                "steps": 5999937,
+                "file_path": "results\\small_city_only_rnd_goal_pos_new_agent2_new_config3\\MoveToGoal\\MoveToGoal-5999937.onnx",
+                "reward": 1.767698411903684,
+                "creation_time": 1646685670.1537352,
+                "auxillary_file_paths": [
+                    "results\\small_city_only_rnd_goal_pos_new_agent2_new_config3\\MoveToGoal\\MoveToGoal-5999937.pt"
+                ]
+            },
+            {
+                "steps": 6499986,
+                "file_path": "results\\small_city_only_rnd_goal_pos_new_agent2_new_config3\\MoveToGoal\\MoveToGoal-6499986.onnx",
+                "reward": null,
+                "creation_time": 1646686675.9442978,
+                "auxillary_file_paths": [
+                    "results\\small_city_only_rnd_goal_pos_new_agent2_new_config3\\MoveToGoal\\MoveToGoal-6499986.pt"
+                ]
+            },
+            {
+                "steps": 6999987,
+                "file_path": "results\\small_city_only_rnd_goal_pos_new_agent2_new_config3\\MoveToGoal\\MoveToGoal-6999987.onnx",
+                "reward": 1.7613461521955638,
+                "creation_time": 1646687656.2455952,
+                "auxillary_file_paths": [
+                    "results\\small_city_only_rnd_goal_pos_new_agent2_new_config3\\MoveToGoal\\MoveToGoal-6999987.pt"
+                ]
+            },
+            {
+                "steps": 7368257,
+                "file_path": "results\\small_city_only_rnd_goal_pos_new_agent2_new_config3\\MoveToGoal\\MoveToGoal-7368257.onnx",
+                "reward": 1.6716101614095398,
+                "creation_time": 1646701725.9725842,
+                "auxillary_file_paths": [
+                    "results\\small_city_only_rnd_goal_pos_new_agent2_new_config3\\MoveToGoal\\MoveToGoal-7368257.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 7368257,
+            "file_path": "results\\small_city_only_rnd_goal_pos_new_agent2_new_config3\\MoveToGoal.onnx",
+            "reward": 1.6716101614095398,
+            "creation_time": 1646701725.9725842,
+            "auxillary_file_paths": [
+                "results\\small_city_only_rnd_goal_pos_new_agent2_new_config3\\MoveToGoal\\MoveToGoal-7368257.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.28.0",
+        "torch_version": "1.7.1+cu110"
+    }
+}
