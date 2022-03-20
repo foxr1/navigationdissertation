@@ -62,11 +62,16 @@ public class GridWithParams : MonoBehaviour
         }
 
         // add random roadblocks
+        BuildRoadblocks();
+    }
+
+    public void BuildRoadblocks()
+    {
         if (parameters.maxRandomRoadBlocks > 0)
         {
             for (int i = 0; i < parameters.maxRandomRoadBlocks; i++)
             {
-                GameObject roadblock = new GameObject($"roadblock_{i}"); 
+                GameObject roadblock = new GameObject($"roadblock_{i}");
                 roadblock.transform.parent = gameObject.transform;
 
                 int randomX = Random.Range(0, parameters.height - 1);

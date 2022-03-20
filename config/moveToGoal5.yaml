@@ -20,6 +20,12 @@ behaviors:
       extrinsic:
         gamma: 0.99
         strength: 1.0
+      curiosity:
+        gamma: 0.8
+        strength: 0.05
+        network_settings:
+          hidden_units: 256
+        learning_rate: 0.00003
     max_steps: 10000000
     time_horizon: 1000
     summary_freq: 30000

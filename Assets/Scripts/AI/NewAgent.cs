@@ -13,15 +13,16 @@ public class NewAgent : Agent
     private Vector3 startPos;
     private Vector3 startRot;
 
-    [SerializeField] private GameObject target;
+    public GameObject target; // Target in parent environment
+    [SerializeField] public GameObject targetPrefab;
+    [SerializeField] public bool shouldSpawnOwnTarget = false; // Used for when there is multiple agents
     [SerializeField] private Material winMaterial;
     [SerializeField] private Material loseMaterial;
-    [SerializeField] private MeshRenderer floorMeshRenderer;
-    [SerializeField] private GridWithParams grid;
+    [SerializeField] private Material agentMaterial;
+    [SerializeField] public MeshRenderer floorMeshRenderer;
+    [SerializeField] public GridWithParams grid;
     [SerializeField] private bool isRandomGrid;
     [SerializeField, Tooltip("Is Agent Random Start Position?")] private bool randomStartPos;
-    [SerializeField, Range(-250, 250)] private int minSpawnLoc;
-    [SerializeField, Range(-250, 250)] private int maxSpawnLoc;
     private Material originalMaterial;
 
     private int randomSeedNo = 0;
@@ -38,13 +39,24 @@ public class NewAgent : Agent
 
     public override void OnEpisodeBegin()
     {
-       // transform.LookAt(target.transform.localPosition);
         transform.localPosition = startPos;
-        transform.localEulerAngles = startRot; 
+        transform.localEulerAngles = startRot;
+
+        // Get random building in environment
+        int randomX = Random.Range(-Mathf.FloorToInt(grid.parameters.height / 2), grid.parameters.height - Mathf.FloorToInt(grid.parameters.height / 2)); 
+        int randomZ = Random.Range(-Mathf.FloorToInt(grid.parameters.height / 2), grid.parameters.width - Mathf.FloorToInt(grid.parameters.height / 2));
+
+        if (shouldSpawnOwnTarget)
+        {
+            Destroy(target);
+            target = GameObject.Instantiate(targetPrefab);
+            target.transform.parent = transform.parent;
+            target.tag = "Goal" + name.Substring(name.Length - 1, 1);
+        }
+
+        // Position target in centre of a building so that it is always reachable despite roadblocks
+        target.transform.localPosition = new Vector3(randomX * grid.parameters.marginBetweenShapes.x * 2, target.transform.localScale.y / 2, randomZ * grid.parameters.marginBetweenShapes.z * 2);
         
-        target.transform.localPosition = new Vector3(Random.Range(minSpawnLoc, maxSpawnLoc), 10, Random.Range(minSpawnLoc, maxSpawnLoc));// For larger grid
-        //target.transform.localPosition = new Vector3(Random.Range(-90, 0), 0, Random.Range(-170, 0)); // For small grid
-        //target.transform.localPosition = new Vector3(Random.Range(0, 3750), 0, Random.Range(0, 3750)); // For big grid
         rbd.velocity = Vector3.zero;
 
         if (isRandomGrid)
@@ -65,11 +77,28 @@ public class NewAgent : Agent
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        sensor.AddObservation(transform.InverseTransformDirection(rbd.velocity));
-        //sensor.AddObservation(target.transform.localPosition);   
-        //sensor.AddObservation(transform.localPosition);
-        //sensor.AddObservation(Vector3.Distance(transform.localPosition, target.transform.localPosition)); // distance to target#
+        // First attempt
+        //sensor.AddObservation(rbd.velocity.x);
+        //sensor.AddObservation(rbd.velocity.z);
+        //sensor.AddObservation(Vector3.Distance(transform.localPosition, target.transform.localPosition)); // distance to target
+
+        // Second attempt
+        //sensor.AddObservation(transform.InverseTransformDirection(rbd.velocity)); 
+
+        // Third attempt
         //sensor.AddObservation(transform.InverseTransformPoint(target.transform.localPosition));
+
+        // Fourth attempt
+        sensor.AddObservation(transform.localPosition);
+        sensor.AddObservation(target.transform.localPosition);
+
+        sensor.AddObservation(rbd.velocity.x);
+        sensor.AddObservation(rbd.velocity.z);
+
+        // Fifth attempt
+        //sensor.AddObservation(transform.InverseTransformDirection(rbd.velocity)); 
+        //sensor.AddObservation(transform.InverseTransformPoint(target.transform.localPosition));
+        //sensor.AddObservation(transform.InverseTransformPoint(transform.localPosition));
     }
 
     public override void OnActionReceived(ActionBuffers actions)
@@ -126,18 +155,35 @@ public class NewAgent : Agent
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Goal"))
+        if (!shouldSpawnOwnTarget)
         {
-            SetReward(+2f);
-            StartCoroutine(ChangeFloorMaterial(winMaterial));
-            //SetRandomGoalPosition();
-            //target.transform.localPosition = new Vector3(Random.Range(-215, 55), 10, Random.Range(-215, 55));// For larger grid
-            EndEpisode();
+            if (other.CompareTag("Goal"))
+            {
+                SetReward(+2f);
+                StartCoroutine(ChangeFloorMaterial(winMaterial));
+                EndEpisode();
+            }
         }
+        else
+        {
+            if (other.CompareTag("Goal" + name.Substring(name.Length - 1, 1))) // if it is goal for other agent
+            {
+                SetReward(+2f);
+                StartCoroutine(ChangeFloorMaterial(loseMaterial));
+                EndEpisode();
+            }
+        }
+        
         if (other.CompareTag("Wall"))
         {
             SetReward(-1f);
             StartCoroutine(ChangeFloorMaterial(loseMaterial));
+            EndEpisode();
+        }
+        if (other.CompareTag("Agent"))
+        {
+            SetReward(-1f);
+            StartCoroutine(ChangeFloorMaterial(agentMaterial));
             EndEpisode();
         }
     }

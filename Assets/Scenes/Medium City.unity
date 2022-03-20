@@ -364,7 +364,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 681183733}
   environmentPrefab: {fileID: 1694215941}
-  noOfEnvironments: 16
+  noOfEnvironments: 25
 --- !u!4 &1137484395
 Transform:
   m_ObjectHideFlags: 0

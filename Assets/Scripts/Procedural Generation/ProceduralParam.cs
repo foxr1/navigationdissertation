@@ -63,7 +63,7 @@ public class ProceduralParam : ScriptableObject
     [SerializeField, Range(0,100), Tooltip("How many procedural materials to generate?")]
     public int proceduralMaterialsToGenerate = 0;
 
-    [SerializeField, Range(0, 50)]
+    [SerializeField, Range(0, 200)]
     public int maxRandomRoadBlocks = 0;
 
     [SerializeField]

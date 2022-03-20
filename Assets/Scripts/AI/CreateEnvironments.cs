@@ -8,9 +8,13 @@ public class CreateEnvironments : MonoBehaviour
     [SerializeField]
     private GameObject mainCamera;
     [SerializeField]
+    private GameObject agentPrefab;
+    [SerializeField]
     private GameObject environmentPrefab;
     [SerializeField, Range(1, 100), Tooltip("Enter a square number")]
     private int noOfEnvironments;
+    [SerializeField, Range(1, 10)]
+    private int noOfAgents;
 
     private GameObject plane;
     private Bounds bounds;
@@ -33,9 +37,6 @@ public class CreateEnvironments : MonoBehaviour
 
     public void SetupEnvironments()
     {
-        GameObject plane = environmentPrefab.transform.GetChild(1).gameObject;
-        Bounds bounds = plane.GetComponent<MeshRenderer>().bounds;
-
         float rows = Mathf.Sqrt(noOfEnvironments);
 
         for (int i = 0; i < rows; i++)
@@ -46,6 +47,11 @@ public class CreateEnvironments : MonoBehaviour
                 {
                     GameObject environment = GameObject.Instantiate(environmentPrefab);
                     environment.transform.position = new Vector3(i * (bounds.size.x * 1.5f), 0, j * (bounds.size.z * 1.5f));
+
+                    if (noOfAgents > 1)
+                    {
+                        SetupAgents(environment);
+                    }
                 }
             }
         }
@@ -56,5 +62,30 @@ public class CreateEnvironments : MonoBehaviour
         float position = ((bounds.size.x * Mathf.Sqrt(noOfEnvironments)) + ((bounds.size.x / 2) * (Mathf.Sqrt(noOfEnvironments) - 1))) / 2 - (bounds.size.x / 2);
 
         mainCamera.transform.position = new Vector3(position, position * 2.5f, position);
+    }
+
+    private void SetupAgents(GameObject environment)
+    {
+        int inv = 1; // top flip sides of grid
+        for (int i = 0; i < noOfAgents - 1; i++)
+        {
+            agentPrefab.GetComponent<NewAgent>().floorMeshRenderer = environment.GetComponentInChildren<MeshRenderer>();
+            agentPrefab.GetComponent<NewAgent>().grid = environment.GetComponentInChildren<GridWithParams>();
+            agentPrefab.GetComponent<NewAgent>().shouldSpawnOwnTarget = true;
+            GameObject agent = GameObject.Instantiate(agentPrefab);
+            agent.name = $"Agent_{i}";
+            agent.transform.parent = environment.transform;
+
+            float zPos = bounds.size.x / 2 - agent.transform.localScale.x * 2;
+            float xPos = Random.Range(zPos * -1 + zPos * 0.2f, zPos - zPos * 0.2f);
+
+            agent.transform.localPosition = new Vector3(xPos, agent.transform.localPosition.y, zPos * inv);
+            if (inv == 1)
+            {
+                agent.transform.localEulerAngles = new Vector3(0, 180, 0);
+            }
+        
+            inv *= -1;
+        }
     }
 }
