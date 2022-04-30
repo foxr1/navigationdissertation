@@ -64,7 +64,7 @@ public class ProceduralParam : ScriptableObject
     public int proceduralMaterialsToGenerate = 0;
 
     [SerializeField, Range(0, 200)]
-    public int maxRandomRoadBlocks = 0;
+    public int roadblockCount = 0;
 
     [SerializeField]
     public Material roadblockMaterial;

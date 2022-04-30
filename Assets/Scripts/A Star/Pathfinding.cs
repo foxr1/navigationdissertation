@@ -9,9 +9,24 @@ public class Pathfinding : MonoBehaviour
     public Transform StartPosition;//Starting position to pathfind from
     public Transform TargetPosition;//Starting position to pathfind to
 
+    float Timer;
+    int CurrentNode = 0;
+    Vector3 CurrentPositionHolder;
+    [SerializeField]
+    private GameObject agent;
+    private bool shouldFollow = false;
+
     private void Awake()//When the program starts
     {
         GridReference = GetComponent<AStarGrid>();//Get a reference to the game manager
+    }
+
+    private void Update()
+    {
+        if (agent.transform.position == TargetPosition.position)
+        {
+
+        }
     }
 
     public void FindPathBtn()
@@ -88,6 +103,7 @@ public class Pathfinding : MonoBehaviour
 
         GridReference.FinalPath = FinalPath;//Set the final path
 
+        CheckNode();
     }
 
     int GetManhattenDistance(Node a_nodeA, Node a_nodeB)
@@ -96,5 +112,67 @@ public class Pathfinding : MonoBehaviour
         int iy = Mathf.Abs(a_nodeA.iGridY - a_nodeB.iGridY);//y1-y2
 
         return ix + iy;//Return the sum
+    }
+
+    private void CheckNode()
+    {
+        Timer = 0;
+        CurrentPositionHolder = GridReference.FinalPath[CurrentNode].vPosition;
+        CurrentPositionHolder = new Vector3(CurrentPositionHolder.x, 2.5f, CurrentPositionHolder.z);
+        StartPosition = agent.transform;
+    }
+
+    public void FollowPath(bool follow)
+    {
+        shouldFollow = follow;
+
+        if (shouldFollow)
+        {
+            Timer += Time.deltaTime * 0.1f;
+
+            if (agent.transform.position != CurrentPositionHolder)
+            {
+                //agent.transform.position = Vector3.Lerp(StartPosition.position, CurrentPositionHolder, Timer);
+                StartCoroutine(LerpPosition(CurrentPositionHolder, 0.35f));
+            }
+            else
+            {
+                if (CurrentNode < GridReference.FinalPath.Count - 1)
+                {
+                    CurrentNode++;
+                    CheckNode();
+                }
+                else
+                {
+                    CurrentNode = 0;
+                    shouldFollow = false;
+                }
+            }
+        }
+    }
+
+    IEnumerator LerpPosition(Vector3 targetPosition, float duration)
+    {
+        float time = 0;
+        Vector3 startPosition = agent.transform.position;
+        while (time < duration)
+        {
+            agent.transform.position = Vector3.Lerp(startPosition, targetPosition, time / duration);
+            time += Time.deltaTime;
+            yield return null;
+        }
+        agent.transform.position = targetPosition;
+        if (CurrentNode < GridReference.FinalPath.Count - 1)
+        {
+            CurrentNode++;
+            CheckNode();
+            FollowPath(true);
+        }
+        else
+        {
+            CurrentNode = 0;
+            shouldFollow = false;
+
+        }
     }
 }

@@ -216,60 +216,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!1001 &658109856
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 9085234635891198893, guid: 307ff51fb81b514429b0e3038c2f45c8, type: 3}
-      propertyPath: m_Name
-      value: Large City
-      objectReference: {fileID: 0}
-    - target: {fileID: 9085234635891198894, guid: 307ff51fb81b514429b0e3038c2f45c8, type: 3}
-      propertyPath: m_RootOrder
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 9085234635891198894, guid: 307ff51fb81b514429b0e3038c2f45c8, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9085234635891198894, guid: 307ff51fb81b514429b0e3038c2f45c8, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9085234635891198894, guid: 307ff51fb81b514429b0e3038c2f45c8, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9085234636917528052, guid: 307ff51fb81b514429b0e3038c2f45c8, type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 9085234637085237967, guid: 307ff51fb81b514429b0e3038c2f45c8, type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 9085234637167380502, guid: 307ff51fb81b514429b0e3038c2f45c8, type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 9085234637199261303, guid: 307ff51fb81b514429b0e3038c2f45c8, type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 9085234637210967098, guid: 307ff51fb81b514429b0e3038c2f45c8, type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 307ff51fb81b514429b0e3038c2f45c8, type: 3}
---- !u!1 &658109857 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9085234635891198893, guid: 307ff51fb81b514429b0e3038c2f45c8, type: 3}
-  m_PrefabInstance: {fileID: 658109856}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1391583926
 GameObject:
   m_ObjectHideFlags: 0
@@ -301,7 +247,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 1881161970}
   agentPrefab: {fileID: 7423233444246318579, guid: 8c0da3489931e014f8701df3d3f851b6, type: 3}
-  environmentPrefab: {fileID: 658109857}
+  environmentPrefab: {fileID: 9085234635891198893, guid: 307ff51fb81b514429b0e3038c2f45c8, type: 3}
   noOfEnvironments: 25
   noOfAgents: 1
 --- !u!4 &1391583928

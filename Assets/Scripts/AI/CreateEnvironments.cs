@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.MLAgents.Policies;
+using Unity.MLAgents.Sensors;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -43,16 +45,13 @@ public class CreateEnvironments : MonoBehaviour
         {
             for (int j = 0; j < rows; j++)
             {
-                if (!(i == 0 && j == 0))
-                {
-                    GameObject environment = GameObject.Instantiate(environmentPrefab);
-                    environment.transform.position = new Vector3(i * (bounds.size.x * 1.5f), 0, j * (bounds.size.z * 1.5f));
+                GameObject environment = GameObject.Instantiate(environmentPrefab);
+                environment.transform.position = new Vector3(i * (bounds.size.x * 1.5f), 0, j * (bounds.size.z * 1.5f));
 
-                    if (noOfAgents > 1)
-                    {
-                        SetupAgents(environment);
-                    }
-                }
+                if (noOfAgents > 1)
+                {
+                    SetupAgents(environment);
+                } 
             }
         }
     }
@@ -69,12 +68,21 @@ public class CreateEnvironments : MonoBehaviour
         int inv = 1; // top flip sides of grid
         for (int i = 0; i < noOfAgents - 1; i++)
         {
-            agentPrefab.GetComponent<NewAgent>().floorMeshRenderer = environment.GetComponentInChildren<MeshRenderer>();
+            RayPerceptionSensorComponent3D[] rayPerceptions = agentPrefab.GetComponents<RayPerceptionSensorComponent3D>();
+
+            //foreach (RayPerceptionSensorComponent3D rayPerception in rayPerceptions)
+            //{
+            //    rayPerception.DetectableTags[1] = "Goal" + i;
+            //}
+
+            //agentPrefab.GetComponent<BehaviorParameters>().TeamId = i + 1;
             agentPrefab.GetComponent<NewAgent>().grid = environment.GetComponentInChildren<GridWithParams>();
             agentPrefab.GetComponent<NewAgent>().shouldSpawnOwnTarget = true;
+            agentPrefab.GetComponent<NewAgent>().floorMeshRenderer = environment.transform.GetChild(1).gameObject.GetComponent<MeshRenderer>();
             GameObject agent = GameObject.Instantiate(agentPrefab);
             agent.name = $"Agent_{i}";
             agent.transform.parent = environment.transform;
+            agent.tag = "Agent";
 
             float zPos = bounds.size.x / 2 - agent.transform.localScale.x * 2;
             float xPos = Random.Range(zPos * -1 + zPos * 0.2f, zPos - zPos * 0.2f);

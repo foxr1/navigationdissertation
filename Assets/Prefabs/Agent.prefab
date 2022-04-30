@@ -14,14 +14,13 @@ GameObject:
   - component: {fileID: 5168007765778142792}
   - component: {fileID: 6251723266018634411}
   - component: {fileID: 7479266085492358498}
-  - component: {fileID: 7400275827981844098}
-  - component: {fileID: 2183655166802336109}
   - component: {fileID: 7349025118048233182}
   - component: {fileID: 2145303954425488341}
   - component: {fileID: 1341876539604566052}
+  - component: {fileID: 7440019640420328141}
   m_Layer: 0
   m_Name: Agent
-  m_TagString: Untagged
+  m_TagString: Agent
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -134,64 +133,9 @@ MonoBehaviour:
   m_DetectableTags:
   - Wall
   - Goal
-  m_RaysPerDirection: 3
+  - Agent
+  m_RaysPerDirection: 4
   m_MaxRayDegrees: 75
-  m_SphereCastRadius: 0.5
-  m_RayLength: 50
-  m_RayLayerMask:
-    serializedVersion: 2
-    m_Bits: 4294967291
-  m_ObservationStacks: 1
-  rayHitColor: {r: 1, g: 0, b: 0, a: 1}
-  rayMissColor: {r: 1, g: 1, b: 1, a: 1}
-  m_StartVerticalOffset: 0
-  m_EndVerticalOffset: 10
---- !u!114 &7400275827981844098
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7423233444246318579}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6bb6b867a41448888c1cd4f99643ad71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SensorName: RayPerceptionSensor1
-  m_DetectableTags:
-  - Wall
-  - Goal
-  m_RaysPerDirection: 3
-  m_MaxRayDegrees: 65
-  m_SphereCastRadius: 0.5
-  m_RayLength: 50
-  m_RayLayerMask:
-    serializedVersion: 2
-    m_Bits: 4294967291
-  m_ObservationStacks: 1
-  rayHitColor: {r: 1, g: 0, b: 0, a: 1}
-  rayMissColor: {r: 1, g: 1, b: 1, a: 1}
-  m_StartVerticalOffset: 0
-  m_EndVerticalOffset: 5
---- !u!114 &2183655166802336109
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7423233444246318579}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6bb6b867a41448888c1cd4f99643ad71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SensorName: RayPerceptionSensor2
-  m_DetectableTags:
-  - Wall
-  - Goal
-  m_RaysPerDirection: 3
-  m_MaxRayDegrees: 70
   m_SphereCastRadius: 0.5
   m_RayLength: 50
   m_RayLayerMask:
@@ -241,10 +185,11 @@ MonoBehaviour:
   floorMeshRenderer: {fileID: 0}
   grid: {fileID: 0}
   isRandomGrid: 1
-  isRandomRoadblocks: 0
+  isRandomRoadblocks: 1
+  isTimedRoadblocks: 1
+  seconds: 5
   randomStartPos: 0
-  minSpawnLoc: -190
-  maxSpawnLoc: 190
+  method: 5
 --- !u!114 &1341876539604566052
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -258,7 +203,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 8
+    VectorObservationSize: 9
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 0
@@ -276,3 +221,16 @@ MonoBehaviour:
   m_UseChildActuators: 1
   m_DeterministicInference: 0
   m_ObservableAttributeHandling: 0
+--- !u!65 &7440019640420328141
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7423233444246318579}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}

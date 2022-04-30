@@ -759,8 +759,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7400275827981844098, guid: 8c0da3489931e014f8701df3d3f851b6, type: 3}
+      propertyPath: m_SphereCastRadius
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 7423233444246318579, guid: 8c0da3489931e014f8701df3d3f851b6, type: 3}
       propertyPath: m_Name
+      value: Agent
+      objectReference: {fileID: 0}
+    - target: {fileID: 7423233444246318579, guid: 8c0da3489931e014f8701df3d3f851b6, type: 3}
+      propertyPath: m_TagString
       value: Agent
       objectReference: {fileID: 0}
     m_RemovedComponents: []

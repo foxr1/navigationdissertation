@@ -11,6 +11,7 @@ public class GridWithParams : MonoBehaviour
     public ProceduralParam parameters = null;
 
     private GameObject[,] grid = null;
+    private GameObject[,] roadblocks = null;
 
     private Material[] proceduralMaterials = null;
 
@@ -61,21 +62,38 @@ public class GridWithParams : MonoBehaviour
             }
         }
 
-        // add random roadblocks
+        // add random roadblocks 
         BuildRoadblocks();
     }
 
     public void BuildRoadblocks()
     {
-        if (parameters.maxRandomRoadBlocks > 0)
+        if (parameters.roadblockCount > 0)
         {
-            for (int i = 0; i < parameters.maxRandomRoadBlocks; i++)
+            roadblocks = new GameObject[parameters.height, parameters.width];
+
+            for (int i = 0; i < parameters.roadblockCount; i++)
             {
                 GameObject roadblock = new GameObject($"roadblock_{i}");
                 roadblock.transform.parent = gameObject.transform;
 
                 int randomX = Random.Range(0, parameters.height - 1);
                 int randomZ = Random.Range(0, parameters.width - 1);
+
+                for (int j = 0; j < 5; j++)
+                {
+                    if (roadblocks[randomX, randomZ] != null)
+                    {
+                        randomX = Random.Range(0, parameters.height - 1);
+                        randomZ = Random.Range(0, parameters.width - 1);
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+
+                roadblocks[randomX, randomZ] = roadblock;
 
                 float xOffset = grid[randomX, randomZ].GetComponent<BoxCollider>().size.x;
                 float zOffset = grid[randomX, randomZ].GetComponent<BoxCollider>().size.z;
@@ -99,7 +117,7 @@ public class GridWithParams : MonoBehaviour
                     roadblock.transform.localPosition += new Vector3(0, 0, zOffset);
                 }
                 else
-                {
+                { 
                     shape = new Cube
                     {
                         Width = parameters.marginBetweenShapes.x * 2 - xOffset,
@@ -114,7 +132,7 @@ public class GridWithParams : MonoBehaviour
                 roadblock.AddComponent<BoxCollider>();
                 roadblock.GetComponent<BoxCollider>().isTrigger = true;
                 roadblock.tag = "Wall";
-                roadblock.layer = 6;
+                roadblock.layer = 6; 
 
                 renderer.material = parameters.roadblockMaterial;
             }
@@ -223,5 +241,37 @@ public class GridWithParams : MonoBehaviour
             }
         }
         grid = null;
+    }
+
+    public void ClearRoadblocks()
+    {
+        if (roadblocks?.Length > 0)
+        {
+            for (int row = 0; row < roadblocks.GetLength(0); row++)
+            {
+                for (int col = 0; col < roadblocks.GetLength(1); col++)
+                {
+                    if (roadblocks[row, col] != null)
+                        Destroy(roadblocks[row, col]);
+                }
+            }
+        }
+
+        roadblocks = null;
+    }
+
+    public void SetRoadblockCount(float count)
+    {
+        int roadblockCount;
+        bool success = int.TryParse(count.ToString(), out roadblockCount);
+        if (success)
+        {
+            parameters.roadblockCount = roadblockCount;
+        }
+    }
+
+    public void SetRoadblockText(Text text)
+    {
+        text.text = parameters.roadblockCount.ToString();
     }
 }

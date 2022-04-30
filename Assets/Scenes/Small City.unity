@@ -153,8 +153,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 2116025869}
+  agentPrefab: {fileID: 1020368090}
   environmentPrefab: {fileID: 1512353198}
   noOfEnvironments: 25
+  noOfAgents: 1
 --- !u!4 &414528114
 Transform:
   m_ObjectHideFlags: 0
@@ -262,6 +264,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &1020368090 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1602534516542202800, guid: eeb15d0b63910994f99800969e2beef9, type: 3}
+  m_PrefabInstance: {fileID: 1512353197}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1512353197
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -23,7 +23,7 @@ MonoBehaviour:
   maxRandomHeightOffset: 1
   maxRandomWidthOffset: 1
   maxRandomDepthOffset: 1
-  randomSeed: 5
+  randomSeed: 35
   ShapeType: 0
   makeShapesStatic: 1
   shouldGenerateRigidBodies: 0
@@ -35,5 +35,5 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 9efcbc445f86e7341be0966216a7ba52, type: 2}
   shaderName: Universal Render Pipeline/Lit
   proceduralMaterialsToGenerate: 0
-  maxRandomRoadBlocks: 40
+  roadblockCount: 40
   roadblockMaterial: {fileID: 2100000, guid: fc1a2f660828fc94a8462bed53b4d4f5, type: 2}
