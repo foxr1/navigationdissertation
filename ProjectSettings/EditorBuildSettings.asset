@@ -11,4 +11,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Large City.unity
     guid: d80bd1c71029adb409cdcf37c61a194c
+  - enabled: 0
+    path: Assets/Scenes/Small City.unity
+    guid: 2b575e49a7c6f434783275aff3e2b8d6
+  - enabled: 0
+    path: Assets/Scenes/Medium City.unity
+    guid: 825f3d77cf12bd046a179e8e8164844c
+  - enabled: 0
+    path: Assets/Scenes/Comparison Test.unity
+    guid: bcff2705aac299949975dbeed48170b4
   m_configObjects: {}

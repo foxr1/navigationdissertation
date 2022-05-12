@@ -146,7 +146,6 @@ public class GridWithParams : MonoBehaviour
         {
             cell = new GameObject($"cell_{row}_{col}");
             cell.transform.parent = gameObject.transform;
-            cell.AddComponent<Wall>();
             grid[row, col] = cell;
         }   
         else {
@@ -154,7 +153,6 @@ public class GridWithParams : MonoBehaviour
             grid[row, col] = new GameObject($"cell_{row}_{col}");
             cell = grid[row, col];
             cell.transform.parent = gameObject.transform;
-            cell.AddComponent<Wall>();
         }
 
         cell.isStatic = parameters.makeShapesStatic;
@@ -205,7 +203,7 @@ public class GridWithParams : MonoBehaviour
             cell.layer = 6;
         }
         
-        // calculate bounds
+        // Calculate bounds
         bounds.Encapsulate(renderer.bounds);
 
         yield return null;

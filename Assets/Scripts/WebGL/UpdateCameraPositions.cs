@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Script for demo scene to change between first and third person
 public class UpdateCameraPositions : MonoBehaviour
 {
     [SerializeField]

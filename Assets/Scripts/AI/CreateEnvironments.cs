@@ -31,12 +31,6 @@ public class CreateEnvironments : MonoBehaviour
         MoveCamera();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     public void SetupEnvironments()
     {
         float rows = Mathf.Sqrt(noOfEnvironments);
@@ -69,13 +63,6 @@ public class CreateEnvironments : MonoBehaviour
         for (int i = 0; i < noOfAgents - 1; i++)
         {
             RayPerceptionSensorComponent3D[] rayPerceptions = agentPrefab.GetComponents<RayPerceptionSensorComponent3D>();
-
-            //foreach (RayPerceptionSensorComponent3D rayPerception in rayPerceptions)
-            //{
-            //    rayPerception.DetectableTags[1] = "Goal" + i;
-            //}
-
-            //agentPrefab.GetComponent<BehaviorParameters>().TeamId = i + 1;
             agentPrefab.GetComponent<NewAgent>().grid = environment.GetComponentInChildren<GridWithParams>();
             agentPrefab.GetComponent<NewAgent>().shouldSpawnOwnTarget = true;
             agentPrefab.GetComponent<NewAgent>().floorMeshRenderer = environment.transform.GetChild(1).gameObject.GetComponent<MeshRenderer>();
@@ -84,14 +71,10 @@ public class CreateEnvironments : MonoBehaviour
             agent.transform.parent = environment.transform;
             agent.tag = "Agent";
 
-            float zPos = bounds.size.x / 2 - agent.transform.localScale.x * 2;
-            float xPos = Random.Range(zPos * -1 + zPos * 0.2f, zPos - zPos * 0.2f);
+            Transform randomStartPos = NewAgent.RandomAgentStartPos();
 
-            agent.transform.localPosition = new Vector3(xPos, agent.transform.localPosition.y, zPos * inv);
-            if (inv == 1)
-            {
-                agent.transform.localEulerAngles = new Vector3(0, 180, 0);
-            }
+            agent.transform.localPosition = randomStartPos.position;
+            agent.transform.eulerAngles = randomStartPos.eulerAngles;
         
             inv *= -1;
         }

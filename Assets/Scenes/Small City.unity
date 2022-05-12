@@ -153,8 +153,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 2116025869}
-  agentPrefab: {fileID: 1020368090}
-  environmentPrefab: {fileID: 1512353198}
+  agentPrefab: {fileID: 7423233444246318579, guid: 8c0da3489931e014f8701df3d3f851b6, type: 3}
+  environmentPrefab: {fileID: 1602534516202299541, guid: eeb15d0b63910994f99800969e2beef9, type: 3}
   noOfEnvironments: 25
   noOfAgents: 1
 --- !u!4 &414528114
@@ -264,49 +264,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!1 &1020368090 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1602534516542202800, guid: eeb15d0b63910994f99800969e2beef9, type: 3}
-  m_PrefabInstance: {fileID: 1512353197}
-  m_PrefabAsset: {fileID: 0}
---- !u!1001 &1512353197
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1602534516202299541, guid: eeb15d0b63910994f99800969e2beef9, type: 3}
-      propertyPath: m_Name
-      value: Small City
-      objectReference: {fileID: 0}
-    - target: {fileID: 1602534516202299542, guid: eeb15d0b63910994f99800969e2beef9, type: 3}
-      propertyPath: m_RootOrder
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1602534516202299542, guid: eeb15d0b63910994f99800969e2beef9, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1602534516202299542, guid: eeb15d0b63910994f99800969e2beef9, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1602534516202299542, guid: eeb15d0b63910994f99800969e2beef9, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1602534516542202804, guid: eeb15d0b63910994f99800969e2beef9, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 180
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: eeb15d0b63910994f99800969e2beef9, type: 3}
---- !u!1 &1512353198 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1602534516202299541, guid: eeb15d0b63910994f99800969e2beef9, type: 3}
-  m_PrefabInstance: {fileID: 1512353197}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2116025869
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,6 +4,7 @@ using UnityEngine;
 using Unity.MLAgents;
 using Unity.MLAgents.Sensors;
 using Unity.MLAgents.Actuators;
+using UnityEngine.UI;
 
 public class NewAgent : Agent
 {
@@ -23,14 +24,25 @@ public class NewAgent : Agent
     [SerializeField] private Material agentMaterial;
     [SerializeField] public MeshRenderer floorMeshRenderer;
     [SerializeField] public GridWithParams grid;
-    [SerializeField] private bool isRandomGrid = false;
-    [SerializeField] private bool isRandomRoadblocks;
-    [SerializeField] private bool isTimedRoadblocks = false;
-    [SerializeField, Range(0, 60)] private float seconds = 30;
-    [SerializeField, Tooltip("Is Agent Random Start Position?")] private bool randomStartPos;
+    [SerializeField] private bool isRandomGrid = false; // Randomise entire city with roadblocks
+    [SerializeField] private bool isRandomRoadblocks; // Only randomise roadblocks instead of entire city
+    [SerializeField] private bool isTimedRoadblocks = false; // Randomise the roadblocks on a timer instead of at end of episode
+    [SerializeField] private bool isRandomStartPosition = false; // Should the agent start in a random position at the start of an episode
+    [SerializeField, Range(0, 60)] private float seconds = 30; // Timer for roadblocks
     private Material originalMaterial;
 
     private int randomSeedNo = 0;
+
+    // Variables for comparison scene
+    private float episodeTimer = 0;
+    private float totalTime = 0;
+    private int episodesCompleted = 0;
+    [SerializeField]
+    private Text lastEpisodeCompletedText;
+    [SerializeField]
+    private Text meanTimeText;
+    [SerializeField]
+    private Text episodesCompletedText;
 
     enum observationMethod
     {
@@ -40,7 +52,8 @@ public class NewAgent : Agent
         four,
         five,
         six,
-        seven
+        seven,
+        eight
     };
 
     [SerializeField]
@@ -58,9 +71,18 @@ public class NewAgent : Agent
 
     public override void OnEpisodeBegin()
     {
-        transform.localPosition = startPos;
-        transform.localEulerAngles = startRot;
-
+        if (isRandomStartPosition)
+        {
+            Transform newPos = RandomAgentStartPos();
+            transform.localPosition = newPos.position;
+            transform.localEulerAngles = newPos.eulerAngles;
+        }
+        else
+        {
+            transform.localPosition = startPos;
+            transform.localEulerAngles = startRot;
+        }
+        
         RandomiseTargetPos();
         
         rbd.velocity = Vector3.zero;
@@ -71,7 +93,8 @@ public class NewAgent : Agent
         }
         if (isRandomRoadblocks)
         {
-            grid.BuildGrid();
+            grid.ClearRoadblocks();
+            grid.BuildRoadblocks();
         }
         if (isTimedRoadblocks)
         {
@@ -80,6 +103,55 @@ public class NewAgent : Agent
         }
     }
 
+    // Code to determine a suitable place for the agent to start around the edge of the city
+    public static Transform RandomAgentStartPos()
+    {
+        Transform newPos = new GameObject().transform;
+
+        float randomXRange = Random.Range(-190, 190);
+        float randomZRange = Random.Range(-190, 190);
+        float[] randomXZs = new float[2];
+        randomXZs[0] = randomXRange;
+        randomXZs[1] = randomZRange;
+
+        int randomIndex = Random.Range(0, randomXZs.Length);
+        float result = randomXZs[randomIndex];
+
+        if (result == randomXRange)
+        {
+            float probability = Random.Range(0.0f, 1.0f);
+
+            if (probability > 0.5)
+            {
+                newPos.localPosition = new Vector3(randomXRange, 2.5f, 195);
+                newPos.localRotation = Quaternion.Euler(new Vector3(0, -180, 0));
+            }
+            else
+            {
+                newPos.localPosition = new Vector3(randomXRange, 2.5f, -195);
+                newPos.localRotation = Quaternion.Euler(new Vector3(0, 0, 0));
+            }
+        } 
+        else if (result == randomZRange)
+        {
+            float probability = Random.Range(0.0f, 1.0f);
+
+            if (probability > 0.5)
+            {
+                newPos.localPosition = new Vector3(195, 2.5f, randomZRange);
+                newPos.localRotation = Quaternion.Euler(new Vector3(0, -90, 0));
+            }
+            else
+            {
+                newPos.localPosition = new Vector3(-195, 2.5f, randomZRange); 
+                newPos.localRotation = Quaternion.Euler(new Vector3(0, 90, 0));
+            }
+        }
+
+        return newPos;
+    }
+
+    // Find suitable location for target to spawn
     private void RandomiseTargetPos()
     {
         // Get random building in environment
@@ -91,7 +163,6 @@ public class NewAgent : Agent
             Destroy(target);
             target = GameObject.Instantiate(targetPrefab);
             target.transform.parent = transform.parent;
-            //target.tag = "Goal" + name.Substring(name.Length - 1, 1);
 
             randomX = Random.Range(-Mathf.FloorToInt(grid.parameters.height / 2), grid.parameters.height - Mathf.FloorToInt(grid.parameters.height / 2));
             randomZ = Random.Range(-Mathf.FloorToInt(grid.parameters.height / 2), grid.parameters.width - Mathf.FloorToInt(grid.parameters.height / 2));
@@ -162,7 +233,7 @@ public class NewAgent : Agent
                 sensor.AddObservation(rbd.velocity.x);
                 sensor.AddObservation(rbd.velocity.z);
 
-                sensor.AddObservation(transform.forward);
+                sensor.AddObservation(transform.forward); 
                 sensor.AddObservation((target.transform.position - transform.position).normalized); // direction to target
 
                 return;
@@ -176,6 +247,14 @@ public class NewAgent : Agent
 
                 sensor.AddObservation(transform.forward);
                 sensor.AddObservation((target.transform.position - transform.position).normalized); // direction to target
+
+                return;
+            case observationMethod.eight:
+                // Eighth attempt
+                sensor.AddObservation(Vector3.Distance(transform.localPosition, target.transform.localPosition));
+
+                sensor.AddObservation(transform.forward);
+                sensor.AddObservation((target.transform.localPosition - transform.localPosition).normalized); // direction to target
 
                 return;
             default: break;
@@ -236,11 +315,17 @@ public class NewAgent : Agent
 
     private void OnTriggerEnter(Collider other)
     {
-        int number; 
-        bool newAgent = int.TryParse(name.Substring(name.Length - 1, 1), out number);
-
         if (other.CompareTag("Goal"))
         {
+            // If the agent is in the comaprison scene then update the scene with variables
+            if (lastEpisodeCompletedText != null)
+            {
+                lastEpisodeCompletedText.text = episodeTimer.ToString("0.00");
+                totalTime += episodeTimer;
+                episodesCompleted++;
+                SetText();
+            }
+
             SetReward(+2f);
             StartCoroutine(ChangeFloorMaterial(winMaterial));
             EndEpisode();
@@ -259,13 +344,27 @@ public class NewAgent : Agent
         }
     }
 
+    // Show values on scene for comparison scene
+    private void SetText()
+    {
+        meanTimeText.text = (totalTime / episodesCompleted).ToString("0.00");
+        episodesCompletedText.text = episodesCompleted.ToString();
+
+        WriteToCSVFile.WriteToCSV.addRecord(episodesCompleted, episodeTimer, totalTime, (totalTime / episodesCompleted), "rl_results.csv");
+    }
+
     private IEnumerator ChangeFloorMaterial(Material material)
     {
         floorMeshRenderer.material = material;
 
+        // Episode timer was resetting to zero before being added to the scene and so small delay is added here to prevent this
+        yield return new WaitForSeconds(0.1f); 
+        episodeTimer = 0.1f;
+
         yield return new WaitForSeconds(1.5f);
 
         floorMeshRenderer.material = originalMaterial;
+        
     }
 
     private void Update()
@@ -282,13 +381,32 @@ public class NewAgent : Agent
         }
     }
 
+    private void FixedUpdate()
+    {
+        episodeTimer += Time.fixedDeltaTime;
+    }
+
     private void TimedRoadblocks()
     {
-        Debug.Log("Here");
         grid.ClearRoadblocks();
         grid.BuildRoadblocks();
         timerSeconds = seconds;
         activeTimer = true;
+    }
+
+    public void ToggleTimer(bool active)
+    {
+        activeTimer = active;
+    }
+
+    public void SetTimerSeconds(float newSeconds)
+    {
+        seconds = newSeconds;
+    }
+
+    public void SetTimerText(Text text)
+    {
+        text.text = seconds.ToString();
     }
 
     public void ForecEndEpisode()

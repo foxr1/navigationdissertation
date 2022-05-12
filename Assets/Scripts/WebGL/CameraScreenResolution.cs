@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Positions the camera above all training environments depending on number of environments
 public class CameraScreenResolution : MonoBehaviour
 {
     [SerializeField]
